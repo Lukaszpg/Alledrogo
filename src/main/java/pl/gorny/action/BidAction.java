@@ -1,9 +1,9 @@
 package pl.gorny.action;
 
 import com.google.gson.Gson;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.gorny.dao.AuctionDao;
 import pl.gorny.dao.BidDto;
 import pl.gorny.model.Auction;
 import pl.gorny.model.Bid;
@@ -24,12 +24,22 @@ public class BidAction extends AbstractAction {
     @Autowired
     private SecurityService securityService;
 
+    public BidAction() {
+        logger = LoggerFactory.getLogger(BidAction.class);
+    }
+
     @Override
     public void execute() {
-        parseJsonToObject();
-        prepareBidObjectFromDto();
-        setLastBidWinningStateToFalseByAuctionId();
-        saveBid();
+        try {
+            parseJsonToObject();
+            prepareBidObjectFromDto();
+            setLastBidWinningStateToFalseByAuctionId();
+            saveBid();
+            responseDto.success = true;
+        } catch(Exception e) {
+            responseDto.success = false;
+            logger.error(e.getMessage());
+        }
     }
 
     private void parseJsonToObject() {
@@ -59,6 +69,5 @@ public class BidAction extends AbstractAction {
 
     private void saveBid() {
         auctionService.saveBid(bidToPersist);
-        responseDto.success = true;
     }
 }

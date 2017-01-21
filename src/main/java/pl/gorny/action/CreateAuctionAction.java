@@ -1,6 +1,7 @@
 package pl.gorny.action;
 
 import com.google.gson.Gson;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.gorny.dto.AuctionDto;
@@ -30,11 +31,21 @@ public class CreateAuctionAction extends AbstractAction {
 
     private Auction auctionToPersist;
 
+    public CreateAuctionAction() {
+        logger = LoggerFactory.getLogger(CreateAuctionAction.class);
+    }
+
     @Override
     public void execute() {
-        parseJsonToObject();
-        prepareAuctionObject();
-        saveAuction();
+        try {
+            parseJsonToObject();
+            prepareAuctionObject();
+            saveAuction();
+            responseDto.success = true;
+        } catch(Exception e) {
+            responseDto.success = false;
+            logger.error(e.getMessage());
+        }
     }
 
     private void parseJsonToObject() {
@@ -64,7 +75,6 @@ public class CreateAuctionAction extends AbstractAction {
 
     private void saveAuction() {
         auctionService.save(auctionToPersist);
-        responseDto.success = true;
     }
 
     private LocalDateTime stringToDateTime() {
