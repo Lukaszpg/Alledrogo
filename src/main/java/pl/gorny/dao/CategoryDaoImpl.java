@@ -26,4 +26,9 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
 
         return (Category) query.uniqueResult();
     }
+
+    @Override
+    public void save(Category category) {
+        persist(category);
+    }
 }
