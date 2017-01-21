@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{index.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content">
+    <div class="row">
+        <h5 th:text="#{index.products.text}"></h5>
+    </div>
+
+    <div class="row">
+        <div th:if="${#lists.isEmpty(auctionList)}" class="col l4 offset-l5">
+            <h6 th:text="#{label.no.auctions}"></h6>
+        </div>
+        <div th:each="auction, iterStat : ${auctionList}" th:if="${iterStat.index}<5">
+            <div class="col l3">
+                <div class="card sticky-action">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" th:src="@{/static/images/default-placeholder.png}">
+                    </div>
+                    <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4" th:text="${auction.title}"><i
+                            class="material-icons right">more_vert</i></span>
+                        <p th:utext="#{label.price.index(${auction.price})}"></p>
+                        <p th:utext="#{label.category.index(${auction.category.name})}"></p>
+                    </div>
+                    <div class="card-action">
+                        <a th:text="#{button.to.auction}" th:href="@{/auctions/details/{id}(id=${auction.id})}"></a>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4" th:text="${auction.title}"><i
+                                class="material-icons right">close</i></span>
+                        <p th:text="${auction.description}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

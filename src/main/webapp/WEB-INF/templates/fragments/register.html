@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{register.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="register">
+    <form role="form" name="registerForm" class="col l12" method="post" ng-submit="template.sendRegister()">
+        <div class="row"><h3 th:text="#{header.register.modal}"></h3></div>
+        <div class="row">
+            <div class="input-field">
+                <input th:placeholder="#{label.name}" id="name" type="text" class="validate"
+                       ng-model="template.registration.name" required>
+                <label for="name" th:text="#{label.name}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.surname}" id="surname" type="text" class="validate"
+                       ng-model="template.registration.surname" required>
+                <label for="surname" th:text="#{label.surname}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.nickname}" id="nickname" type="text" class="validate"
+                       ng-model="template.registration.nickname" required>
+                <label for="nickname" th:text="#{label.nickname}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.address}" id="address" type="text" class="validate"
+                       ng-model="template.registration.address" required>
+                <label for="address" th:text="#{label.address}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.city}" id="city" type="text" class="validate"
+                       ng-model="template.registration.city" required>
+                <label for="city" th:text="#{label.city}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.zipcode}" id="zipcode" type="text" data-mask="00-000"
+                       class="validate"
+                       ng-model="template.registration.zipcode" required>
+                <label for="zipcode" th:text="#{label.zipcode}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.email}" id="email" type="email" class="validate"
+                       ng-model="template.registration.email" required>
+                <label for="email" th:text="#{label.email}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.password}" length="32" type="password" id="password" class="validate"
+                       ng-model="template.registration.password" required>
+                <label for="password" th:text="#{label.password}"></label>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="waves-effect btn-flat float-right">
+                <span th:text="#{button.register}" th:remove="tag"></span><i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

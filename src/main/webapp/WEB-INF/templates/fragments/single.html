@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(${auction.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="sell">
+    <div class="row"><h3 th:text="${auction.title}"></h3></div>
+    <div class="row">
+        <div class="col l4">
+            <img class="single-auction-photo" th:src="@{/static/images/default-placeholder.png}">
+        </div>
+        <div class="col l8">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col l5">
+                    <div th:if="${auction.winningBid != null}">
+                        <p id="winning-bid" th:text="#{label.winning.bid}"></p>
+                        <p class="winning-bid" th:utext="#{label.current.price(${auction.winningBid.amount})}"></p>
+                    </div>
+                    <div th:if="${auction.winningBid == null}">
+                        <p id="winning-bid" th:text="#{label.winning.bid}"></p>
+                        <p class="winning-bid" th:utext="#{label.current.price(${auction.price})}"></p>
+                    </div>
+                </div>
+                <div class="col l3 offset-l8">
+                    <div ng-show="$storage.authenticated" class="bidding-form">
+                        <form role="form" name="bidForm" method="post"
+                              ng-submit="template.placeBid()">
+                            <div class="input-field">
+                                <input type="hidden" th:value="${auction.id}" id="auction-id">
+                                <input th:placeholder="#{label.your.bid}" type="text" id="bid" class="validate"
+                                       ng-model="template.bid.amount" required>
+                                <label for="bid" th:text="#{label.your.bid}"></label>
+                            </div>
+                            <button type="submit" class="waves-effect btn-flat float-right">
+                                <span th:text="#{button.bid}" th:remove="tag"></span><i class="material-icons right">euro_symbol</i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="divider"></div>
+            <div class="row">
+                <div class="col l5">
+                    <p class="font-bold" th:text="#{label.shipping.cost}"></p>
+                    <i class="material-icons">local_shipping</i>
+                    <p class="shipping" th:utext="#{label.inpost('12.99')}"></p>
+                    <i class="material-icons">local_shipping</i>
+                    <p class="shipping" th:utext="#{label.dpd('18.99')}"></p>
+                    <i class="material-icons">local_shipping</i>
+                    <p class="shipping" th:utext="#{label.ups('16.99')}"></p>
+                    <i class="material-icons">local_shipping</i>
+                    <p class="shipping" th:utext="#{label.pocztex('14.99')}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="divider"></div>
+        <div class="col l3">
+            <h3 th:Text="#{label.auction.description}"></h3>
+            <p th:text="${auction.description}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="divider"></div>
+        <h3 th:Text="#{label.auction.bid.history}"></h3>
+
+        <div th:if="${#lists.isEmpty(auction.bids)}">
+            <h6 th:text="#{label.no.bids}"></h6>
+        </div>
+
+        <div th:if="${not #lists.isEmpty(auction.bids)}">
+            <table>
+                <thead>
+                <tr>
+                    <th th:text="#{header.amount}" data-field="amount"></th>
+                    <th th:text="#{header.buyer}" data-field="buyer"></th>
+                </tr>
+                </thead>
+
+                <tbody th:each="bid : ${auction.bids}">
+                <tr>
+                    <td th:utext="#{label.current.price(${bid.amount})}"></td>
+                    <td th:text="${bid.buyer.email}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

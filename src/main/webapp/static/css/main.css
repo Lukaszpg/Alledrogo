@@ -1,0 +1,84 @@
+.logo {
+    width: 200px;
+    margin-top: 9px;
+    margin-left: 7px;
+}
+
+.navbar-top, .footer-custom {
+    background-color: #353230 !important;
+}
+
+.page-flexbox-wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 1 auto;
+}
+
+.border-1px {
+    border: 1px solid #000 !important;
+}
+
+.margin-top-8px {
+    margin-top: 8px;
+}
+
+.margin-top-14px {
+    margin-top: 14px;
+}
+
+.search-button {
+    max-height: 48px;
+    height: 48px;
+    background-color: #505050;
+}
+
+.search-button-icon {
+    font-size: 25px !important;
+    margin-top: 5px;
+}
+
+.login-modal {
+    width: 22%;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #535353 !important;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
+.float-right {
+    float: right;
+}
+
+.single-auction-photo {
+    width: 100%;
+    border: 1px solid #000;
+}
+
+.shipping {
+    margin-top: -30px;
+    margin-left: 30px;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.winning-bid {
+    font-size: 1.4rem;
+    color: #fe3c00;
+    font-weight: 700;
+    margin-left: 4px;
+    margin-top: -15px;
+}
+
+.bidding-form {
+    margin-top: -80px;
+}

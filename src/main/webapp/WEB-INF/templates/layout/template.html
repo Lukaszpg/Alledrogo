@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headFragment(title)">
+    <meta charset="utf-8"/>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/materialize.min.css}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/main.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/loading-bar.css}"/>
+    <link type="text/css" rel="stylesheet" th:href="@{/static/css/jquery.growl.css}"/>
+    <link rel="shortcut icon" type="image/ico" th:href="@{/static/images/favicon.ico}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title}"></title>
+</head>
+<body th:fragment="bodyFragment" ng-app="alledrogoApp">
+<script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery.mask.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/materialize.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/register.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/angular.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/angular-route.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/angular-animate.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/angular-cookies.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/angular-storage.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/jquery.growl.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/loading-bar.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/app/app.js}"></script>
+<header>
+    <div th:replace="layout/navbar-top :: navbarTopFragment"></div>
+</header>
+<div class="container page-flexbox-wrapper" ng-controller="template as template">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col l9">
+            <div class="input-field">
+                <input id="search" type="search" class="z-depth-5" required>
+                <label for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons margin-top-8px close-button-clear-action">close</i>
+            </div>
+        </div>
+        <div class="input-field col l2">
+            <select>
+                <option value="" selected disabled th:text="#{all.categories}"></option>
+                <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}">Wireframe</option>
+            </select>
+        </div>
+        <div class="col l1 margin-top-14px">
+            <a class="btn waves-effect search-button">
+                <i class="search-button-icon material-icons small">search</i>
+            </a>
+        </div>
+    </div>
+    <main th:include="this :: content">
+        <div ng-view></div>
+    </main>
+
+    <div th:replace="modals/login-modal :: loginModalFragment"></div>
+</div>
+<div th:replace="layout/footer :: footerFragment"></div>
+</body>
+</html>

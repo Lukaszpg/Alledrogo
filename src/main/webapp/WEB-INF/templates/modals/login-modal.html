@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="loginModalFragment" id="loginModal" class="modal login-modal">
+    <form role="form" class="col l12" ng-submit="template.login()">
+        <div class="modal-content">
+            <div class="row"><h3 th:text="#{header.login.modal}"></h3></div>
+            <div class="row">
+                <div class="alert alert-danger" th:text="#{error.login}" ng-show="template.error">
+                </div>
+                <div class="input-field">
+                    <input th:placeholder="#{label.email}" id="login" type="text" class="validate"
+                           ng-model="template.credentials.email" required>
+                    <label for="login" th:text="#{label.email}"></label>
+                </div>
+                <div class="input-field">
+                    <input th:placeholder="#{label.password}" type="password" id="password" class="validate"
+                           ng-model="template.credentials.password" required>
+                    <label for="password" th:text="#{label.password}"></label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="waves-effect btn-flat">
+                <span th:text="#{button.login}" th:remove="tag"></span><i class="material-icons right">send</i></button>
+            <a href="#!" class="modal-close waves-effect btn-flat" th:text="#{button.close}"><i
+                    class="material-icons right">send</i></a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

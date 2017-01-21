@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{sell.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="sell">
+    <form role="form" name="sellForm" class="col l12" method="post" ng-submit="template.createAuction()">
+        <div class="row"><h3 th:text="#{header.sell}"></h3></div>
+        <div class="row">
+            <div class="input-field">
+                <input th:placeholder="#{label.auction.title}" id="title" type="text" class="validate"
+                       ng-model="template.auction.title" length="150" required>
+                <label for="title" th:text="#{label.auction.title}"></label>
+            </div>
+            <div class="input-field">
+                <textarea id="description" th:placeholder="#{label.auction.description}"
+                          class="validate materialize-textarea" length=5000 ng-model="template.auction.description"
+                          required></textarea>
+                <label for="description" th:text="#{label.auction.description}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.amount}" id="amount" type="text" class="validate"
+                       ng-model="template.auction.amount" required>
+                <label for="amount" th:text="#{label.amount}"></label>
+            </div>
+            <div class="input-field">
+                <input th:placeholder="#{label.price}" id="price" type="text" class="validate"
+                       ng-model="template.auction.price" required>
+                <label for="price" th:text="#{label.price}"></label>
+            </div>
+            <div class="input-field">
+                <select id="category" ng-model="template.auction.category" required>
+                    <option value="" disabled selected th:text="#{all.categories}"></option>
+                    <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}">Wireframe</option>
+                </select>
+                <label for="category" th:text="#{label.category}"></label>
+            </div>
+            <label for="endDate" th:text="#{label.endDate}"></label>
+            <input ng-model="template.auction.endDate" id="endDate" type="text"
+                   class="datepicker" required>
+        </div>
+        <div class="row">
+            <button type="submit" class="waves-effect btn-flat float-right">
+                <span th:text="#{button.sell}" th:remove="tag"></span><i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
