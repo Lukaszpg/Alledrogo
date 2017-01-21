@@ -2,6 +2,7 @@ package pl.gorny.dto;
 
 public class UsernameDto {
     private String username;
+    private String role;
 
     public String getUsername() {
         return username;
@@ -9,5 +10,13 @@ public class UsernameDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

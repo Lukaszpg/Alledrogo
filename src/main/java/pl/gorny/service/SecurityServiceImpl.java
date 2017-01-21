@@ -42,6 +42,14 @@ public class SecurityServiceImpl implements SecurityService {
         return stringBuilder.toString();
     }
 
+    public String findLoggedInRole() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        pl.gorny.model.User user = userDao.findUserByEmail(auth.getName());
+
+        return user.getRole().name();
+    }
+
     @Override
     public boolean login(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);

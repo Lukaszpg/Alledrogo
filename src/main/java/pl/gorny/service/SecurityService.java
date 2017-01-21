@@ -7,5 +7,7 @@ public interface SecurityService {
 
     String findLoggedInUsername();
 
+    String findLoggedInRole();
+
     boolean login(String username, String password);
 }

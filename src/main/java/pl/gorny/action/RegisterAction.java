@@ -51,7 +51,7 @@ public class RegisterAction extends AbstractAction {
         toPersistUser.setZipcode(userDto.getZipcode());
         toPersistUser.setEmail(userDto.getEmail());
         toPersistUser.setPassword(userDto.getPassword());
-        toPersistUser.setRole(Role.USER_ROLE);
+        toPersistUser.setRole(Role.ROLE_USER);
     }
 
     public void saveUser() {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{admin.panel.add.category.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="add-category">
+    <form role="form" name="addCategoryForm" class="col l12" method="post" ng-submit="template.addCategory()">
+        <div class="row"><h3 th:text="#{admin.panel.add.category.title}"></h3></div>
+        <div class="row">
+            <div class="input-field">
+                <input th:placeholder="#{label.category.name}" id="name" type="text" class="validate"
+                       ng-model="template.category.name" required>
+                <label for="name" th:text="#{label.category.name}"></label>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" class="waves-effect btn-flat float-right">
+                <span th:text="#{button.add.category}" th:remove="tag"></span><i class="material-icons right">add</i>
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

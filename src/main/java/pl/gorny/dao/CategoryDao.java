@@ -9,4 +9,6 @@ public interface CategoryDao {
     List<Category> findAll();
 
     Category findOne(Long id);
+
+    void save(Category category);
 }

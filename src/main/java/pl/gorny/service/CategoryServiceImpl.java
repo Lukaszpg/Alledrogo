@@ -23,4 +23,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getOne(Long id) {
         return categoryDao.findOne(id);
     }
+
+    @Override
+    public void add(Category category) {
+        categoryDao.save(category);
+    }
 }

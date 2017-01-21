@@ -11,6 +11,7 @@ import pl.gorny.service.AuctionService;
 import pl.gorny.service.CategoryService;
 import pl.gorny.model.User;
 import pl.gorny.service.SecurityService;
+import pl.gorny.utils.DateUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -58,7 +59,7 @@ public class CreateAuctionAction extends AbstractAction {
         auctionToPersist.setCategory(getCategoryFromDatabase());
         auctionToPersist.setTitle(auctionDto.getTitle());
         auctionToPersist.setDescription(auctionDto.getDescription());
-        auctionToPersist.setEndDate(stringToDateTime());
+        auctionToPersist.setEndDate(DateUtil.stringToDateTime(auctionDto.getEndDate()));
         auctionToPersist.setItemsAmount(auctionDto.getAmount());
         auctionToPersist.setSeller(getSeller());
         auctionToPersist.setPrice(auctionDto.getPrice());
@@ -75,10 +76,5 @@ public class CreateAuctionAction extends AbstractAction {
 
     private void saveAuction() {
         auctionService.save(auctionToPersist);
-    }
-
-    private LocalDateTime stringToDateTime() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(auctionDto.getEndDate() + " 00:00", formatter);
     }
 }

@@ -35,6 +35,7 @@ public class LoginAction extends AbstractAction {
         if(responseDto.success) {
             UsernameDto usernameDto = new UsernameDto();
             usernameDto.setUsername(securityService.findLoggedInUsername());
+            usernameDto.setRole(securityService.findLoggedInRole());
 
             responseDto.body = new Gson().toJson(usernameDto);
         }

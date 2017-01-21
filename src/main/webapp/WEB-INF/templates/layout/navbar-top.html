@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
 </head>
 <body>
@@ -8,6 +8,9 @@
         <a href="/alledrogo"><img class="logo" th:src="@{/static/images/logo.png}"></a>
         </img>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li ng-show="$storage.role == 'ROLE_ADMIN'">
+                <a href="admin" th:text="#{button.admin}"></a>
+            </li>
             <li><a ng-show="!$storage.authenticated" href="#loginModal" class="login-button" th:text="#{button.login}"></a></li>
             <li><a href="#" ng-show="$storage.authenticated" class="logout-button" ng-click="template.logout()" th:text="#{button.logout}"></a></li>
             <li><a ng-show="!$storage.authenticated" href="register" th:text="#{button.create.account}"></a></li>

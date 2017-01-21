@@ -10,6 +10,10 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
             templateUrl: 'templates/fragments/register',
             controller: 'template',
             controllerAs: 'template'
+        }).when('/admin', {
+            templateUrl: 'templates/fragments/admin',
+            controller: 'template',
+            controllerAs: 'template'
         }).when('/logout', {
             templateUrl: 'templates/index',
             controller: 'template',
@@ -35,6 +39,7 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                 if (response.data.success) {
                     var body = angular.fromJson(response.data.body);
                     $rootScope.$storage.authenticated = true;
+                    $rootScope.$storage.role = body.role;
                     $rootScope.$storage.username = body.username;
                     $rootScope.$storage.email = credentials.email;
                     $.growl.notice({title: "Zalogowano", message: "Pomyślnie zalogowano."});
@@ -114,6 +119,21 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
             });
         };
 
+        var saveCategory = function(category, callback) {
+            var categoryData = category ? {
+                    name: category.name
+                } : {};
+
+            $http.post('save-category', categoryData).then(function (response) {
+                if (response.data.success) {
+                    $.growl.notice({title: "Dodano kategorię", message: "Pomyślnie dodano kategorię."});
+                }
+                callback && callback();
+            }, function () {
+                callback && callback();
+            });
+        };
+
         self.credentials = {};
         self.login = function () {
             authenticate(self.credentials, function () {
@@ -131,10 +151,12 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
             $http.post('logout', {}).then(function (response) {
                 if (response.data.success) {
                     $rootScope.$storage.authenticated = false;
-                    $.growl.error({title: "Wylogowano", message: "Pomyślnie wylogowano."});
+                    $.growl.notice({title: "Wylogowano", message: "Pomyślnie wylogowano."});
                     delete $rootScope.$storage.authenticated;
                     delete $rootScope.$storage.username;
                     delete $rootScope.$storage.email;
+                    delete $rootScope.$storage.role;
+                    $window.location.href = '/alledrogo';
                 } else {
                     $.growl.error({title: "Błąd", message: "Przy wylogowywaniu wystąpił błąd."});
                 }
@@ -161,6 +183,15 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
         self.placeBid = function() {
             saveBid(self.bid, function() {
                 if(response.data.success) {
+                }
+            })
+        }
+
+        self.category = {};
+        self.addCategory = function() {
+            saveCategory(self.category, function() {
+                if(response.data.success) {
+
                 }
             })
         }

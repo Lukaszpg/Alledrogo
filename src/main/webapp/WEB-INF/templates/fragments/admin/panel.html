@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{admin.panel.title})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="admin">
+    <div class="row"><h3 th:text="#{admin.panel.title}"></h3></div>
+    <div class="row">
+        <div class="col l5 offset-l5">
+            <a href="admin/add-category" class="waves-effect waves-light btn">
+                <span th:text="#{button.add.category}" th:remove="tag"></span><i class="material-icons right">add</i>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
