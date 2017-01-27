@@ -6,7 +6,9 @@
     <form role="form" class="col l12" ng-submit="template.login()">
         <div class="modal-content">
             <div class="row"><h3 th:text="#{header.login.modal}"></h3></div>
-            <div class="row">
+                <div class="row">
+                    <div class="alert alert-danger" th:text="#{error.login}" ng-show="template.error">
+                </div>
                 <div class="input-field">
                     <input th:placeholder="#{label.email}" id="login" type="text" class="validate"
                            ng-model="template.credentials.username" required>
