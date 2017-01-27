@@ -23,8 +23,10 @@ public class SearchController {
     @PostMapping("/search")
     public ModelAndView search(@RequestParam("item") String item, @RequestParam("category") String categoryName) {
         ModelAndView modelAndView = new ModelAndView("fragments/search");
+
         Long categoryId = categoryService.getCategoryIdByCategoryName(categoryName).longValue();
         List<Auction> auctions = auctionService.getNotEndedAuctionsByCriteria(item, categoryId);
+
         modelAndView.addObject("auctions", auctions);
         modelAndView.addObject("item", item);
 

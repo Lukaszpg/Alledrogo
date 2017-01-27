@@ -63,6 +63,14 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<Auction> getNotEndedAuctionsByCriteria(String item, Long id) {
-        return auctionDao.findNotEndedAuctionsByCriteria(item, id);
+        List<Auction> auctions = auctionDao.findNotEndedAuctionsByCriteria(item, id);
+
+        for(Auction auction : auctions) {
+            auction.setWinningBid(getWinningBidByAuctionId(auction.getId()));
+        }
+
+        return auctions;
     }
+
+
 }
