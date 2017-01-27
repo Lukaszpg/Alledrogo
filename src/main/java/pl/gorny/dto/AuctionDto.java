@@ -6,7 +6,7 @@ public class AuctionDto {
     private String description;
     private Integer amount;
     private Long category;
-    private String endDate;
+    private Integer durationInDays;
     private String userEmail;
     private Double price;
 
@@ -42,14 +42,6 @@ public class AuctionDto {
         this.category = category;
     }
 
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
     public String getUserEmail() {
         return userEmail;
     }
@@ -64,5 +56,13 @@ public class AuctionDto {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(Integer durationInDays) {
+        this.durationInDays = durationInDays;
     }
 }

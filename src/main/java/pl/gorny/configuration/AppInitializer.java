@@ -20,10 +20,4 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[] { "/" };
     }
-
-    @Override
-    protected Filter[] getServletFilters() {
-        Filter[] singleton = { new CORSFilter() };
-        return singleton;
-    }
 }

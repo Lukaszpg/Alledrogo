@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.gorny.dto.AuctionDto;
+import pl.gorny.dto.ResponseDto;
 import pl.gorny.model.Auction;
 import pl.gorny.model.Category;
 import pl.gorny.service.AuctionService;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class CreateAuctionAction extends AbstractAction {
+public class CreateAuctionAction extends AbstractAction<AuctionDto> {
 
     @Autowired
     private CategoryService categoryService;
@@ -28,11 +29,10 @@ public class CreateAuctionAction extends AbstractAction {
     @Autowired
     private SecurityService securityService;
 
-    private AuctionDto auctionDto;
-
     private Auction auctionToPersist;
 
     public CreateAuctionAction() {
+        responseDto = new ResponseDto();
         logger = LoggerFactory.getLogger(CreateAuctionAction.class);
     }
 
@@ -51,27 +51,31 @@ public class CreateAuctionAction extends AbstractAction {
 
     private void parseJsonToObject() {
         Gson gson = new Gson();
-        auctionDto = gson.fromJson(json, AuctionDto.class);
+        dto = gson.fromJson(json, AuctionDto.class);
     }
 
     private void prepareAuctionObject() {
         auctionToPersist = new Auction();
         auctionToPersist.setCategory(getCategoryFromDatabase());
-        auctionToPersist.setTitle(auctionDto.getTitle());
-        auctionToPersist.setDescription(auctionDto.getDescription());
-        auctionToPersist.setEndDate(DateUtil.stringToDateTime(auctionDto.getEndDate()));
-        auctionToPersist.setItemsAmount(auctionDto.getAmount());
+        auctionToPersist.setTitle(dto.getTitle());
+        auctionToPersist.setDescription(dto.getDescription());
+        auctionToPersist.setEndDate(prepareAuctionEndDate());
+        auctionToPersist.setItemsAmount(dto.getAmount());
         auctionToPersist.setSeller(getSeller());
-        auctionToPersist.setPrice(auctionDto.getPrice());
+        auctionToPersist.setPrice(dto.getPrice());
         auctionToPersist.setHasEnded(false);
     }
 
+    private LocalDateTime prepareAuctionEndDate() {
+        return LocalDateTime.now().plusDays(dto.getDurationInDays());
+    }
+
     private Category getCategoryFromDatabase() {
-        return categoryService.getOne(auctionDto.getCategory());
+        return categoryService.getOne(dto.getCategory());
     }
 
     private User getSeller() {
-        return securityService.getUserByEmail(auctionDto.getUserEmail());
+        return securityService.getUserByEmail(dto.getUserEmail());
     }
 
     private void saveAuction() {

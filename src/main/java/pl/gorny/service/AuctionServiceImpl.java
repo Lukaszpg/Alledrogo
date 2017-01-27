@@ -26,7 +26,14 @@ public class AuctionServiceImpl implements AuctionService {
 
     @Override
     public List<Auction> getTopFourAuctions() {
-        return auctionDao.getTopFour();
+        List<Auction> auctions = auctionDao.getTopFour();
+        if(auctions != null && !auctions.isEmpty()) {
+            for(Auction auction : auctions) {
+                auction.setWinningBid(getWinningBidByAuctionId(auction.getId()));
+            }
+        }
+
+        return auctions;
     }
 
     @Override
@@ -52,5 +59,10 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public List<Bid> getBidsForAuction(Long id) {
         return auctionDao.findBidsForAuction(id);
+    }
+
+    @Override
+    public List<Auction> getNotEndedAuctionsByCriteria(String item, Long id) {
+        return auctionDao.findNotEndedAuctionsByCriteria(item, id);
     }
 }

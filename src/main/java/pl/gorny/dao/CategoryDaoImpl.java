@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.gorny.model.Category;
 import pl.gorny.utils.Queries;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Transactional
@@ -30,5 +31,13 @@ public class CategoryDaoImpl extends AbstractDao implements CategoryDao {
     @Override
     public void save(Category category) {
         persist(category);
+    }
+
+    @Override
+    public BigInteger findCategoryIdByCategoryName(String name) {
+        Query query = getSession().createSQLQuery(Queries.GET_CATEGORY_ID_BY_NAME);
+        query.setParameter("name", name);
+
+        return (BigInteger) query.uniqueResult();
     }
 }

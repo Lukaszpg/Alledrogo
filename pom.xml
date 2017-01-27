@@ -31,6 +31,7 @@
         <guava.version>20.0</guava.version>
         <javax.validation.version>1.1.0.Final</javax.validation.version>
         <thymeleaf.spring.security.version>3.0.1.RELEASE</thymeleaf.spring.security.version>
+        <quartz.version>2.2.3</quartz.version>
     </properties>
 
     <dependencies>
@@ -120,7 +121,11 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
             <version>${thymeleaf.spring.security.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

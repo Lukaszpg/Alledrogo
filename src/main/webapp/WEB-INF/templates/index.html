@@ -24,6 +24,9 @@
                     <span class="card-title activator grey-text text-darken-4" th:text="${auction.title}"><i
                             class="material-icons right">more_vert</i></span>
                         <p th:utext="#{label.price.index(${auction.price})}"></p>
+                        <div th:if="${auction.winningBid != null}">
+                            <p th:utext="#{label.winning.bid.index(${auction.winningBid.amount})}"></p>
+                        </div>
                         <p th:utext="#{label.category.index(${auction.category.name})}"></p>
                     </div>
                     <div class="card-action">

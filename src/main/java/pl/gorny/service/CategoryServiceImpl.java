@@ -6,6 +6,7 @@ import pl.gorny.dao.CategoryDao;
 import pl.gorny.model.Auction;
 import pl.gorny.model.Category;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -27,5 +28,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void add(Category category) {
         categoryDao.save(category);
+    }
+
+    @Override
+    public BigInteger getCategoryIdByCategoryName(String name) {
+        return categoryDao.findCategoryIdByCategoryName(name);
     }
 }

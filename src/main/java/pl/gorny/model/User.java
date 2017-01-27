@@ -9,7 +9,7 @@ public class User extends AbstractModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column
     private String password;
@@ -42,11 +42,11 @@ public class User extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

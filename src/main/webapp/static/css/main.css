@@ -82,3 +82,64 @@ main {
 .bidding-form {
     margin-top: -80px;
 }
+
+.auction-ended-label {
+     margin-top: -29px;
+     margin-left: 30px;
+}
+
+.auction-will-end-in {
+    margin-top: -28px;
+    margin-left: 30px;
+}
+
+.auction-countdown {
+    margin-left: 170px;
+    margin-top: -22px;
+}
+
+.mt-plus7 {
+    margin-top: 7px;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    color: #fe3c00;
+}
+
+.mt-minus35 {
+    margin-top: -35px;
+}
+
+.single-auction-result-photo {
+    width: 80%;
+}
+
+.mt-plus10 {
+    margin-top: 10px;
+}
+
+.single-auction-result-title {
+    margin-top: 10px;
+    margin-left: -45px !important;
+}
+
+.single-auction-result-price-position {
+    margin-left: -45px !important;
+    margin-top: -20px;
+    height: 0;
+}
+
+.single-auction-result-price {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.single-auction-result-price-with-shipping-position {
+    margin-left: -45px !important;
+    margin-top: 80px;
+    color: #a9a9a9;
+}
+
+.single-auction-result {
+    margin-top: 25px;
+}

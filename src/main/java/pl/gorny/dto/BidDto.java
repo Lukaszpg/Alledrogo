@@ -1,16 +1,16 @@
-package pl.gorny.dao;
+package pl.gorny.dto;
 
 
 public class BidDto {
-    private Double amount;
+    private String amount;
     private Long auctionId;
     private String buyerEmail;
 
-    public Double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

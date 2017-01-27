@@ -32,6 +32,7 @@ public class AuctionDaoImpl extends AbstractDao implements AuctionDao {
     }
 
     @Override
+    @Transactional
     public Auction getOne(Long id) {
         Query query = getSession().createSQLQuery(Queries.GET_SINGLE_AUCTION).addEntity(Auction.class);
         query.setParameter("id", id);
@@ -64,6 +65,23 @@ public class AuctionDaoImpl extends AbstractDao implements AuctionDao {
     public List<Bid> findBidsForAuction(Long id) {
         Query query = getSession().createSQLQuery(Queries.GET_BIDS_BY_AUCTION_ID).addEntity(Bid.class);
         query.setParameter("id", id);
+
+        return query.list();
+    }
+
+    @Override
+    public void endAuction(Long id) {
+        Query query = getSession().createSQLQuery(Queries.END_AUCTION);
+        query.setParameter("id", id);
+
+        query.executeUpdate();
+    }
+
+    @Override
+    public List<Auction> findNotEndedAuctionsByCriteria(String item, Long categoryId) {
+        Query query = getSession().createSQLQuery(Queries.GET_NOT_ENDED_AUCTIONS_BY_CRITERIA).addEntity(Auction.class);
+        query.setParameter("id", categoryId);
+        query.setParameter("item", "%" + item + "%");
 
         return query.list();
     }

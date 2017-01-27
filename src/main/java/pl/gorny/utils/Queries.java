@@ -11,4 +11,7 @@ public class Queries {
     public static final String UPDATE_LAST_WINNING_STATE_BY_AUCTION_ID = "UPDATE bids SET is_winning = 0 WHERE auction_id = :id";
     public static final String GET_WINNING_BID_BY_AUCTION_ID = "SELECT b.* FROM bids b WHERE b.is_winning = 1 AND b.auction_id = :id";
     public static final String GET_BIDS_BY_AUCTION_ID = "SELECT b.* FROM bids b LEFT JOIN users u ON b.buyer_id = u.id WHERE b.auction_id = :id";
+    public static final String END_AUCTION = "UPDATE auctions SET has_ended = 1 WHERE id = :id";
+    public static final String GET_CATEGORY_ID_BY_NAME = "SELECT id FROM categories WHERE name = :name";
+    public static final String GET_NOT_ENDED_AUCTIONS_BY_CRITERIA = "SELECT * FROM auctions WHERE category_id = :id AND title LIKE :item AND has_ended = 0";
 }

@@ -21,4 +21,8 @@ public interface AuctionDao {
     Bid findWinningBidByAuctionId(Long id);
 
     List<Bid> findBidsForAuction(Long id);
+
+    void endAuction(Long id);
+
+    List<Auction> findNotEndedAuctionsByCriteria(String item, Long categoryId);
 }

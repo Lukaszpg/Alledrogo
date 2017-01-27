@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
+import pl.gorny.dto.ResponseDto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,10 @@ public class LogoutAction extends AbstractAction {
     private HttpServletRequest request;
 
     private HttpServletResponse response;
+
+    public LogoutAction() {
+        responseDto = new ResponseDto();
+    }
 
     @Override
     public void execute() {

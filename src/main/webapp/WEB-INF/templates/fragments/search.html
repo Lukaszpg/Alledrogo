@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/template :: headFragment(#{header.search.results})">
+    <title>Index</title>
+    <meta charset="utf-8"/>
+</head>
+<body th:replace="layout/template :: bodyFragment">
+<div th:fragment="content" id="search-results">
+    <div class="row">
+        <div class="col l12">
+            <h4 th:text="#{label.looking.for(${item})}"></h4>
+            <div th:if="${auctions != null}">
+                <div th:each="auction : ${auctions}">
+                    <div class="single-auction-result">
+                        <div class="row">
+                            <div class="col l2">
+                                <img class="single-auction-result-photo"
+                                     th:src="@{/static/images/default-placeholder.png}">
+                            </div>
+                            <div class="col l9 single-auction-result-title">
+                                <a th:href="@{/auctions/details/{id}(id=${auction.id})}" th:text="${auction.title}"></a>
+                            </div>
+                            <div class="col l9 single-auction-result-price-position">
+                                <div th:if="${auction.winningBid != null}">
+                                    <p class="single-auction-result-price"
+                                       th:utext="#{label.current.price(${auction.winningBid.amount})}"></p>
+                                </div>
+                                <div th:if="${auction.winningBid == null}">
+                                    <p class="single-auction-result-price"
+                                       th:utext="#{label.current.price(${auction.price})}"></p>
+                                </div>
+                            </div>
+                            <div class="col l9 single-auction-result-price-with-shipping-position">
+                                <div th:if="${auction.winningBid != null}">
+                                    <p class="single-auction-result-price-with-shipping"
+                                       th:utext="#{label.price.with.shipping.lowest(${auction.winningBid.amount + 12.99})}"></p>
+                                </div>
+                                <div th:if="${auction.winningBid == null}">
+                                    <p class="single-auction-result-price-with-shipping"
+                                       th:utext="#{label.price.with.shipping.lowest(${auction.price + 12.99})}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+            </div>
+            <div th:if="${auctions == null}">
+                <div class="col offset-l6">
+                    <p th:text="${label.no.search.results}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

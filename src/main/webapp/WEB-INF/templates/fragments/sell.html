@@ -37,9 +37,13 @@
                 </select>
                 <label for="category" th:text="#{label.category}"></label>
             </div>
-            <label for="endDate" th:text="#{label.endDate}"></label>
-            <input ng-model="template.auction.endDate" id="endDate" type="text"
-                   class="datepicker" required>
+                <select id="endDate" ng-model="template.auction.durationInDays" required>
+                    <option disabled selected>Wybierz</option>
+                    <option value="1">1 dni</option>
+                    <option value="7">7 dni</option>
+                    <option value="14">14 dni</option>
+                </select>
+                <label for="endDate" th:text="#{label.endDate}"></label>
         </div>
         <div class="row">
             <button type="submit" class="waves-effect btn-flat float-right">

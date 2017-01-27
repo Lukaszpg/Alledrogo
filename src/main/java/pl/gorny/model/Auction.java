@@ -10,7 +10,7 @@ public class Auction extends AbstractModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(length = 150)
     private String title;
@@ -33,7 +33,7 @@ public class Auction extends AbstractModel {
     @OneToOne
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User seller;
 
     @OneToMany(mappedBy = "auction")
@@ -42,11 +42,11 @@ public class Auction extends AbstractModel {
     @Transient
     private Bid winningBid;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

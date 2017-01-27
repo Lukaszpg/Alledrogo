@@ -12,12 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title th:text="${title}"></title>
 </head>
-<body th:fragment="bodyFragment" ng-app="alledrogoApp">
+<body th:fragment="bodyFragment" ng-app="alledrogoApp" ng-controller="template as template">
 <script type="text/javascript" th:src="@{/static/js/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/jquery.mask.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/materialize.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/register.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/countdown.js}"></script>
+<script type="text/javascript" th:src="@{/static/js/single-auction.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/angular.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/angular-route.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/angular-animate.min.js}"></script>
@@ -29,27 +31,28 @@
 <header>
     <div th:replace="layout/navbar-top :: navbarTopFragment"></div>
 </header>
-<div class="container page-flexbox-wrapper" ng-controller="template as template">
+<div class="container page-flexbox-wrapper">
     <div class="row"></div>
     <div class="row">
-        <div class="col l9">
-            <div class="input-field">
-                <input id="search" type="search" class="z-depth-5" required>
-                <label for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons margin-top-8px close-button-clear-action">close</i>
+        <form role="form" name="searchForm" method="post" action="/alledrogo/search">
+            <div class="col l9">
+                <div class="input-field">
+                    <input id="search" type="search" name="item" class="z-depth-5" required>
+                    <label for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons margin-top-8px close-button-clear-action">close</i>
+                </div>
             </div>
-        </div>
-        <div class="input-field col l2">
-            <select>
-                <option value="" selected disabled th:text="#{all.categories}"></option>
-                <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}">Wireframe</option>
-            </select>
-        </div>
-        <div class="col l1 margin-top-14px">
-            <a class="btn waves-effect search-button">
-                <i class="search-button-icon material-icons small">search</i>
-            </a>
-        </div>
+            <div class="input-field col l2">
+                <select id="search-categories" name="category" required>
+                    <option value="" selected disabled th:text="#{all.categories}"></option>
+                </select>
+            </div>
+            <div class="col l1 margin-top-14px">
+                <button type="submit" class="btn waves-effect search-button">
+                    <span th:remove="tag"></span><i class="search-button-icon material-icons small">search</i>
+                </button>
+            </div>
+        </form>
     </div>
     <main th:include="this :: content">
         <div ng-view></div>

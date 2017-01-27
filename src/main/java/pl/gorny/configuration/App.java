@@ -6,6 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -28,6 +29,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan("pl.gorny")
+@Import({ SecurityConfiguration.class })
 public class App extends WebMvcConfigurerAdapter implements ApplicationContextAware
 {
     private ApplicationContext applicationContext;
@@ -41,6 +43,7 @@ public class App extends WebMvcConfigurerAdapter implements ApplicationContextAw
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
         resolver.setCharacterEncoding("UTF-8");
+        resolver.setContentType("text/html; charset=UTF-8");
         return resolver;
     }
 

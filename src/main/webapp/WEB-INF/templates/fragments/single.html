@@ -7,15 +7,40 @@
 <body th:replace="layout/template :: bodyFragment">
 <div th:fragment="content" id="sell">
     <div class="row"><h3 th:text="${auction.title}"></h3></div>
+    <div class="row mt-minus35">
+        <h7 th:text="${auction.category.name}"></h7>
+    </div>
     <div class="row">
+        <input type="hidden" id="countdownDate" th:value="${auction.endDate}">
         <div class="col l4">
             <img class="single-auction-photo" th:src="@{/static/images/default-placeholder.png}">
         </div>
         <div class="col l8">
             <div class="row">
-            </div>
-            <div class="row">
-                <div class="col l5">
+                <div class="col l6">
+                    <div th:if="${auction.hasEnded}">
+                        <div th:if="${auction.winningBid != null}">
+                            <i class="material-icons">alarm</i><strong>
+                            <div class="auction-ended-label"
+                                 th:utext="#{label.auction.ended(${auction.winningBid.buyer.name}, ${auction.winningBid.buyer.surname})}">
+                            </div>
+                        </strong>
+                        </div>
+                        <div th:if="${auction.winningBid == null}">
+                            <i class="material-icons">alarm</i><strong>
+                            <div class="auction-ended-label" th:text="#{label.auction.ended.no.winner}"></div>
+                        </strong>
+                        </div>
+                    </div>
+                    <div th:if="${!auction.hasEnded}">
+                        <i class="material-icons">alarm</i>
+                        <div class="auction-will-end-in">
+                            <strong>
+                                <div th:text="#{label.auction.will.end.at}"></div>
+                            </strong>
+                            <div class="auction-countdown" id="countdown-placeholder"></div>
+                        </div>
+                    </div>
                     <div th:if="${auction.winningBid != null}">
                         <p id="winning-bid" th:text="#{label.winning.bid}"></p>
                         <p class="winning-bid" th:utext="#{label.current.price(${auction.winningBid.amount})}"></p>
@@ -32,10 +57,11 @@
                             <div class="input-field">
                                 <input type="hidden" th:value="${auction.id}" id="auction-id">
                                 <input th:placeholder="#{label.your.bid}" type="text" id="bid" class="validate"
-                                       ng-model="template.bid.amount" required>
+                                       th:disabled="${auction.hasEnded}" ng-model="template.bid.amount" required>
                                 <label for="bid" th:text="#{label.your.bid}"></label>
                             </div>
-                            <button type="submit" class="waves-effect btn-flat float-right">
+                            <button type="submit" th:disabled="${auction.hasEnded}"
+                                    class="waves-effect btn-flat float-right">
                                 <span th:text="#{button.bid}" th:remove="tag"></span><i class="material-icons right">euro_symbol</i>
                             </button>
                         </form>
@@ -48,16 +74,25 @@
             <div class="row"></div>
             <div class="divider"></div>
             <div class="row">
-                <div class="col l5">
-                    <p class="font-bold" th:text="#{label.shipping.cost}"></p>
-                    <i class="material-icons">local_shipping</i>
-                    <p class="shipping" th:utext="#{label.inpost('12.99')}"></p>
-                    <i class="material-icons">local_shipping</i>
-                    <p class="shipping" th:utext="#{label.dpd('18.99')}"></p>
-                    <i class="material-icons">local_shipping</i>
-                    <p class="shipping" th:utext="#{label.ups('16.99')}"></p>
-                    <i class="material-icons">local_shipping</i>
-                    <p class="shipping" th:utext="#{label.pocztex('14.99')}"></p>
+                <div class="col l8">
+                    <ul class="tabs">
+                        <li class="tab col l3"><a href="#info" th:text="#{label.auction.info}"></a></li>
+                        <li class="tab col l3"><a href="#shipping" th:text="#{label.shipping.cost}"></a></li>
+                    </ul>
+                    <div id="info">
+                        <div class="mt-plus7"
+                             th:utext="#{label.auction.seller(${auction.seller.name}, ${auction.seller.surname})}"></div>
+                    </div>
+                    <div id="shipping" class="mt-plus7">
+                        <i class="material-icons">local_shipping</i>
+                        <p class="shipping" th:utext="#{label.inpost('12.99')}"></p>
+                        <i class="material-icons">local_shipping</i>
+                        <p class="shipping" th:utext="#{label.dpd('18.99')}"></p>
+                        <i class="material-icons">local_shipping</i>
+                        <p class="shipping" th:utext="#{label.ups('16.99')}"></p>
+                        <i class="material-icons">local_shipping</i>
+                        <p class="shipping" th:utext="#{label.pocztex('14.99')}"></p>
+                    </div>
                 </div>
             </div>
         </div>

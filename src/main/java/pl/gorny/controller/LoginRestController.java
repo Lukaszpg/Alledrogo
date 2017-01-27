@@ -1,11 +1,7 @@
 package pl.gorny.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.gorny.action.LoginAction;
 import pl.gorny.action.LogoutAction;
 import pl.gorny.dto.ResponseDto;
@@ -23,7 +19,7 @@ public class LoginRestController {
     private LogoutAction logoutAction;
 
     @ResponseBody
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ResponseDto login(@RequestBody String body) {
         loginAction.setJson(body);
         loginAction.execute();
@@ -32,7 +28,7 @@ public class LoginRestController {
     }
 
     @ResponseBody
-    @RequestMapping("/logout")
+    @PostMapping("/logout")
     public ResponseDto logout(HttpServletRequest request, HttpServletResponse response) {
         logoutAction.setRequest(request);
         logoutAction.setResponse(response);

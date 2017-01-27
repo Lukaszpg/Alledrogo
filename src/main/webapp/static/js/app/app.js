@@ -26,31 +26,53 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
     })
     .controller('template', function ($rootScope, $http, $location, $localStorage, $sessionStorage, $window) {
 
+        angular.element(document).ready(function () {
+            getSearchCategories();
+        });
+
+        var getSearchCategories = function() {
+            $http.get('/alledrogo/get-search-categories').then(function (response) {
+                if (response.data.success) {
+                    var parsed = JSON.parse(response.data.body);
+                    var categoriesSelect = $('#search-categories');
+
+                    categoriesSelect.material_select();
+
+                    for(var i = 0; i < parsed.length; i++) {
+                        var option = $('<option value="'+parsed[i]["name"]+'">'+parsed[i]["name"]+'</option>');
+                        categoriesSelect.append(option);
+                    }
+
+                    categoriesSelect.material_select('update');
+                    categoriesSelect.closest('.input-field').children('span.caret').remove();
+                } else {
+                    $.growl.error({title: "Błąd", message: "Nie udało się pobrać kategorii wyszukiwania."});
+                }
+            }, function () {
+            });
+        };
+
         var self = this;
         $rootScope.$storage = $localStorage;
 
         var authenticate = function (credentials, callback) {
             var loginData = credentials ? {
-                login: credentials.email,
+                username: credentials.username,
                 password: btoa(credentials.password)
             } : {};
 
-            $http.post('login', loginData).then(function (response) {
+            $http.post('/alledrogo/login', loginData).then(function (response) {
                 if (response.data.success) {
                     var body = angular.fromJson(response.data.body);
                     $rootScope.$storage.authenticated = true;
                     $rootScope.$storage.role = body.role;
                     $rootScope.$storage.username = body.username;
-                    $rootScope.$storage.email = credentials.email;
+                    $rootScope.$storage.email = credentials.username;
                     $.growl.notice({title: "Zalogowano", message: "Pomyślnie zalogowano."});
                     $('#loginModal').modal('close');
                 } else {
                     $rootScope.$storage.authenticated = false;
                 }
-                callback && callback();
-            }, function () {
-                $rootScope.$storage.authenticated = false;
-                callback && callback();
             });
 
         };
@@ -68,16 +90,13 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                 email: registration.email
             } : {};
 
-            $http.post('save-user', registrationData).then(function (response) {
+            $http.post('/alledrogo/save-user', registrationData).then(function (response) {
                 if (response.data.success) {
                     $.growl.notice({title: "Zarejestrowano", message: "Pomyślnie zarejestrowano."});
                     self.registration = {};
                     $rootScope.registerForm.$setUntouched();
                     $rootScope.registerForm.$setPristine();
                 }
-                callback && callback();
-            }, function () {
-                callback && callback();
             });
         };
 
@@ -87,18 +106,15 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                 description: auctionData.description,
                 amount: auctionData.amount,
                 category: auctionData.category,
-                endDate: auctionData.endDate,
+                durationInDays: auctionData.durationInDays,
                 price: auctionData.price,
                 userEmail: $rootScope.$storage.email
             } : {};
 
-            $http.post('createAuction', requestData).then(function (response) {
+            $http.post('/alledrogo/createAuction', requestData).then(function (response) {
                 if (response.data.success) {
                     $.growl.notice({title: "Wystawiono przedmiot", message: "Pomyślnie utworzono aukcję."});
                 }
-                callback && callback();
-            }, function () {
-                callback && callback();
             });
         };
 
@@ -109,13 +125,14 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                 buyerEmail: $rootScope.$storage.email
             } : {};
 
-            $http.post('bid', bidData).then(function (response) {
+            $http.post('/alledrogo/auctions/details/bid', bidData).then(function (response) {
                 if (response.data.success) {
                     $.growl.notice({title: "Zalicytowano", message: "Pomyślnie zalicytowano."});
+                    $("#bid").val("");
+                    setWinningBidOnAmountDisplay(response.data.body);
+                } else {
+                    $.growl.error({title: "Błąd", message: response.data.message});
                 }
-                callback && callback();
-            }, function () {
-                callback && callback();
             });
         };
 
@@ -124,13 +141,10 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                     name: category.name
                 } : {};
 
-            $http.post('save-category', categoryData).then(function (response) {
+            $http.post('/alledrogo/rest/admin/add-category', categoryData).then(function (response) {
                 if (response.data.success) {
                     $.growl.notice({title: "Dodano kategorię", message: "Pomyślnie dodano kategorię."});
                 }
-                callback && callback();
-            }, function () {
-                callback && callback();
             });
         };
 
@@ -141,14 +155,14 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
                     $location.path("/");
                     self.error = false;
                 } else {
-                    $location.path("/login");
+                    $location.path("/alledrogo/login");
                     self.error = true;
                 }
             });
         };
 
         self.logout = function () {
-            $http.post('logout', {}).then(function (response) {
+            $http.post('/alledrogo/logout', {}).then(function (response) {
                 if (response.data.success) {
                     $rootScope.$storage.authenticated = false;
                     $.growl.notice({title: "Wylogowano", message: "Pomyślnie wylogowano."});
@@ -163,36 +177,46 @@ angular.module('alledrogoApp', ['ngRoute', 'angular-loading-bar', 'ngAnimate', '
             });
         };
 
+        var searchAuctions = function(searchArgs) {
+            var searchArguments = searchArgs ? {
+                category: searchArgs.category,
+                item: searchArgs.item
+            } : {};
+
+            $http.post('/alledrogo/search', searchArguments).then(function (response) {
+                if (response.data.success) {
+                } else {
+                }
+            });
+        }
+
+        self.searchData = {};
+        self.sendSearch = function() {
+            searchAuctions(self.searchData);
+        }
+
         self.registration = {};
         self.sendRegister = function() {
-            register(self.registration, function() {
-                if(response.data.success) {
-                }
-            })
+            register(self.registration);
         };
 
         self.auction = {};
         self.createAuction = function() {
-            sell(self.auction, function() {
-                if(response.data.success) {
-                }
-            })
+            sell(self.auction);
         }
 
         self.bid = {};
         self.placeBid = function() {
-            saveBid(self.bid, function() {
-                if(response.data.success) {
-                }
-            })
+            saveBid(self.bid);
         }
 
         self.category = {};
         self.addCategory = function() {
-            saveCategory(self.category, function() {
-                if(response.data.success) {
+            saveCategory(self.category);
+        }
 
-                }
-            })
+        var setWinningBidOnAmountDisplay = function(json) {
+            var object = JSON.parse(json);
+            $('.winning-bid').text(object.amount + " PLN");
         }
     });

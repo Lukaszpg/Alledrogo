@@ -21,4 +21,6 @@ public interface AuctionService {
     Bid getWinningBidByAuctionId(Long id);
 
     List<Bid> getBidsForAuction(Long id);
+
+    List<Auction> getNotEndedAuctionsByCriteria(String item, Long id);
 }

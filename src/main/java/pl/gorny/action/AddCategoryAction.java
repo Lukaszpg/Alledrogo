@@ -4,22 +4,21 @@ import com.google.gson.Gson;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.gorny.dto.AuctionDto;
 import pl.gorny.dto.CategoryDto;
+import pl.gorny.dto.ResponseDto;
 import pl.gorny.model.Category;
 import pl.gorny.service.CategoryService;
 
 @Component
-public class AddCategoryAction extends AbstractAction {
+public class AddCategoryAction extends AbstractAction<CategoryDto> {
 
     @Autowired
     private CategoryService categoryService;
 
-    private CategoryDto categoryDto;
-
     private Category categoryToPersist;
 
     public AddCategoryAction() {
+        responseDto = new ResponseDto();
         logger = LoggerFactory.getLogger(AddCategoryAction.class);
     }
 
@@ -38,12 +37,12 @@ public class AddCategoryAction extends AbstractAction {
 
     private void parseJsonToObject() {
         Gson gson = new Gson();
-        categoryDto = gson.fromJson(json, CategoryDto.class);
+        dto = gson.fromJson(json, CategoryDto.class);
     }
 
     private void prepareCategoryObject() {
         categoryToPersist = new Category();
-        categoryToPersist.setName(categoryDto.getName());
+        categoryToPersist.setName(dto.getName());
     }
 
     private void saveCategory() {

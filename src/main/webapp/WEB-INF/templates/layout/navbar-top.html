@@ -4,17 +4,17 @@
 </head>
 <body>
 <nav th:fragment="navbarTopFragment">
-    <div class="navbar-top nav-wrapper" ng-controller="template as template">
+    <div class="navbar-top nav-wrapper">
         <a href="/alledrogo"><img class="logo" th:src="@{/static/images/logo.png}"></a>
         </img>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li ng-show="$storage.role == 'ROLE_ADMIN'">
-                <a href="admin" th:text="#{button.admin}"></a>
+                <a href="/alledrogo/admin" th:text="#{button.admin}"></a>
             </li>
             <li><a ng-show="!$storage.authenticated" href="#loginModal" class="login-button" th:text="#{button.login}"></a></li>
             <li><a href="#" ng-show="$storage.authenticated" class="logout-button" ng-click="template.logout()" th:text="#{button.logout}"></a></li>
-            <li><a ng-show="!$storage.authenticated" href="register" th:text="#{button.create.account}"></a></li>
-            <li><a ng-show="$storage.authenticated" href="sell" th:text="#{button.create.auction}"></a></li>
+            <li><a ng-show="!$storage.authenticated" href="/alledrogo/register" th:text="#{button.create.account}"></a></li>
+            <li><a ng-show="$storage.authenticated" href="/alledrogo/sell" th:text="#{button.create.auction}"></a></li>
             <li><a ng-show="$storage.authenticated">{{$storage.username}}</a></li>
         </ul>
     </div>

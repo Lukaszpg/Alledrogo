@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping
+@RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/admin")
+    @GetMapping
     public String displayAdminPanel() {
         return "fragments/admin/panel";
     }
 
-    @GetMapping("/admin/add-category")
+    @GetMapping("/add-category")
     public String displayAddCategory() {
         return "fragments/admin/add-category";
     }
