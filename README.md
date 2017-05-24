@@ -1,5 +1,5 @@
 # Alledrogo
-First version of my auction site project developed with Java 8, Spring and Angular. Made as a project for class at Poznan University of Technology. Now deprecated.
+First version of my auction site project developed mainly with Java 8, Spring and Angular. Made as a project for class at Poznan University of Technology. Now deprecated.
 
 
 Technologies used:
